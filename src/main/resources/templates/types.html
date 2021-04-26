@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>分类</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/me.css">
+</head>
+<body>
+<!--导航-->
+<!--inverted 颜色翻转  attached依附-->
+<th:block th:replace="_fragments :: menu(2)"></th:block>
+<!--中间部分-->
+<div class="m-padded-tb-big m-container-small">
+    <div class="ui container">
+<!--        header-->
+        <div class="ui segment top attached">
+            <div class="ui two column middle aligned grid">
+                <div class="column">
+                    <h3 class="header teal ui">分类</h3>
+                </div>
+                <div class="column right aligned">
+                    共<h2 class="ui header orange m-inline-block m-text-thin" th:text="${#arrays.length(types)}"> 1 </h2>个
+                </div>
+            </div>
+        </div>
+
+<!--        所有标签的位置-->
+        <div class="ui attached segment m-padded-tb-big">
+            <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
+                <a href="#" th:href="@{/types/{id}(id=${type.id})}" th:classappend="${type.id == activeTypeId} ?'teal'" class="ui basic button" th:text="${type.name}">学习日志</a>
+                <div class="ui basic left pointing label" th:classappend="${type.id == activeTypeId} ?'teal'" th:text="${#arrays.length(type.blogs)}">24</div>
+            </div>
+        </div>
+<!--        标签对应的文章-->
+        <div class="ui top attached segment teal">
+            <div class="ui padded vertical segment m-padded-tb-larger" th:each="blog : ${page.content}">
+                <div class="ui middle aligned mobile reversed stackable grid " >
+                    <div class="eleven wide column">
+                        <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">这是一个标题</a></h3>
+                        <p class="m-text" th:text="|${blog.description}...|">据西班牙《理智报》网站10月24日报道，欧洲战略情报与安全中心（ESISC）世界恐怖活动观察项目负责人马蒂亚·卡尼利亚在接受《理智报》采访时警告说：“在不久的将来，欧洲可能会发生更多复制这种简化版圣战手段的袭击事件。</p>
+                        <div class="ui stackable grid">
+                            <div class="eleven wide column">
+                                <div class="ui mini horizontal link list">
+                                    <div class="item">
+                                        <img th:src="@{${blog.firstPicture}}" src="https://picsum.photos/seed/picsum/100/100?image=1805" alt="" class="ui avatar image">
+                                        <div class="content">
+                                            <a href="#" th:text="${blog.user.nickname}" class="header">蓝小狼</a>
+                                        </div>
+                                    </div>
+                                    <!--                                            时间-->
+                                    <div class="item">
+                                        <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-10-26</span>
+                                    </div>
+                                    <!--                                            查看数量-->
+                                    <div class="item">
+                                        <i class="eye icon"></i><span th:text="${blog.views}">2342</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right aligned five wide column">
+                                <a href="#" target="_blank" th:text="${blog.type.name}" class="ui label teal basic m-padded-tiny m-text-thin">认证升级</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="five wide column">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                            <img th:src="@{${blog.firstPicture}}" src="https://picsum.photos/seed/picsum/800/450?image=1805" alt="" class="ui rounded image">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--                footer-->
+        <div class="ui bottom segment attached">
+            <div class="ui two column middle aligned grid">
+                <div class="column">
+                    <a th:href="@{/(page=${page.number}-1)}" class="ui button teal basic mini" th:unless="${page.first}">上一页</a>
+                </div>
+                <div class="column right aligned">
+                    <a th:href="@{/(page=${page.number}+1)}" class="ui button teal basic mini" th:unless="${page.last}">下一页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="_fragments::footer"></th:block>
+<th:block th:replace="_fragments::script"></th:block>
+<script>
+    $('.menu.toggle').click(function (e) {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+</script>
+</body>
+</html>

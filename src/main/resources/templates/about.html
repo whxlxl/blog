@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>关于我</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/me.css">
+</head>
+<body>
+<!--导航-->
+<!--inverted 颜色翻转  attached依附-->
+<th:block th:replace="_fragments :: menu(5)"></th:block>
+<!--中间部分-->
+<div class="m-padded-tb-big m-container">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="eleven wide column">
+                <div class="ui segment">
+                    <img src="https://picsum.photos/seed/picsum/800/600?image=1805" alt="" class="ui rounded image">
+                </div>
+            </div>
+            <div class="five wide column">
+                <div class="ui top attached segment">
+                    <div class="ui header">关于我</div>
+                </div>
+                <div class="ui attached segment">
+                    <p class="m-text-thin" th:text="#{about.msg1}">
+                        一个独立开发者
+                    </p>
+
+                    <p class="m-text-thin" th:text="#{about.msg2}">
+                        热爱编程，喜欢折腾
+                    </p>
+                </div>
+
+                <div class="ui attached segment">
+                    <div class="ui basic orange left pointing label m-margin-tb-tiny" th:each="type:${types}">
+                        <a href="#" class="m-orange" th:href="@{/types/{id}(id=${type.id})}" th:text="${type.name}"></a>
+                    </div>
+
+                </div>
+
+                <div class="ui attached segment">
+                    <div class="ui basic teal left pointing label m-margin-tb-tiny" th:each="tag:${tags}" >
+                        <a class="m-teal" th:text="${tag.name}" th:href="@{/tags/{id}(id=${tag.id})}">java</a>
+                    </div>
+                </div>
+
+                <div class="ui bottom attached segment">
+                    <a href="#" class="ui circular icon button">
+                        <i class="github icon"></i>
+                    </a>
+
+                    <a href="#" class="ui wechat circular icon button">
+                        <i class="weixin icon"></i>
+                    </a>
+
+                    <a href="#" class="ui qq circular icon button" data-content="913413756" data-position="bottom center">
+                        <i class="qq icon"></i>
+                    </a>
+                </div>
+
+                <div class="ui wechat-qr flowing popup transition hidden">
+                    <img src="./images/wechat.png" alt="" class="ui rounded image" style="width: 110px">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="_fragments::footer"></th:block>
+<th:block th:replace="_fragments::script"></th:block>
+<script>
+    $('.menu.toggle').click(function (e) {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.qq').popup();
+
+    $('.wechat').popup({
+        popup:('.wechat-qr'),
+        position:'bottom center'
+    });
+</script>
+</body>
+</html>

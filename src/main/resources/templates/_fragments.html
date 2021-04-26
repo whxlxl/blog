@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title th:replace="${title}">博客详情</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" type="text/css" href="/css/me.css " th:href="@{/css/me.css}">
+</head>
+<body>
+
+
+
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary menu stackable">
+            <h2 class="ui header teal item">Blog</h2>
+            <a href="/" th:classappend="${n==1} ? 'active':''" class="m-item item m-mobile-hide"><i class=" home icon"></i>首页</a>
+            <a href="/types/-1" th:classappend="${n==2} ? 'active':''" class="m-item item m-mobile-hide"><i class=" idea icon"></i>分类</a>
+            <a href="/tags/-1" th:classappend="${n==3} ? 'active':''" class="m-item item m-mobile-hide"><i class=" tags icon"></i>标签</a>
+            <a href="/archives" th:classappend="${n==4} ? 'active':''" class="m-item item m-mobile-hide"><i class=" clone icon"></i>归档</a>
+            <a href="/about" th:classappend="${n==5} ? 'active':''" class="m-item item m-mobile-hide"><i class=" info icon"></i>关于我</a>
+            <div class="right m-item item m-mobile-hide">
+                <form name="search" action="/search" method="post" th:action="@{/search}" target="_blank">
+                    <div class="input ui icon  transparent inverted">
+                        <input type="text" name="query" th:value="${query}" placeholder="search.......">
+                        <i onclick="document.forms['search'].submit()" class="search icon link"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<footer th:fragment="footer" class="ui inverted segment vertical m-padded-tb-massive">
+    <div class="ui container center aligned">
+        <!--        grid宽度为16分 wide是铺满 divided分割线 center aligned居中-->
+        <div class="ui divided grid inverted stackable">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="./images/wechat.png" alt="" class="ui rounded image" style="width: 10em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-spaced m-opacity-mini">最新博客</h4>
+                <div id="newblog-container">
+                    <div class="ui inverted link list" th:fragment="newbloglist">
+                        <a href="#" class="item" th:each="blog:${newblogs}" th:text="${blog.title}" target="_blank" th:href="@{/blog/{id}(id=${blog.id})}">用户故事（user story）</a>
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted headerm-text-spaced m-opacity-mini">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item" >Email: <span th:text="#{index.email}"></span></a>
+                    <a href="#" class="item">QQ: <span th:text="#{index.qq}"></span></a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-spaced m-opacity-mini">lxl</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini" th:text="#{index.msg}"></p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright@2020-2020 lxl Designed by lxl</p>
+    </div>
+</footer>
+
+
+<th:block th:fragment="script">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+    <script src="/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <script src="/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+    <script src="/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script src="/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+    <script>
+        $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
+</th:block>
+
+</body>
+</html>

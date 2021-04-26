@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>博客管理</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/me.css">
+</head>
+<body>
+<!--导航-->
+<!--inverted 颜色翻转  attached依附-->
+<th:block th:replace="admin/_fragments::menu(0)"></th:block>
+<!--二级导航-->
+<!--中间部分-->
+<div class="m-padded-tb-big m-container-small">
+    <div class="ui container">
+        <div class="ui success large message">
+            <h3>Hi,</h3>
+            <p>欢迎登录</p>
+        </div>
+    </div>
+</div>
+<th:block th:replace="admin/_fragments::script"></th:block>
+<script>
+    $('.menu.toggle').click(function (e) {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on:'hover'
+    });
+</script>
+</body>
+</html>

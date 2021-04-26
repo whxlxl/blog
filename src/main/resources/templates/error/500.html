@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>404</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" type="text/css" href="/css/me.css " th:href="@{/css/me.css}">
+</head>
+
+<body>
+<th:block th:replace="_fragments :: menu(0)"></th:block>
+<div class="class m-container-small m-padded-tb-massive">
+    <div class="ui error message m-padded-tb-massive">
+        <div class="ui container">
+            <h2>500</h2>
+            <p>服务器内部错误</p>
+        </div>
+    </div>
+</div>
+<!--底部-->
+<th:block th:replace="_fragments::footer"></th:block>
+</body>
+</html>

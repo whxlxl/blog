@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>分类新增</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="../lib/editormd/css/editormd.css">
+    <link rel="stylesheet" type="text/css" href="../css/me.css">
+</head>
+<body>
+<!--导航-->
+<!--inverted 颜色翻转  attached依附-->
+<nav th:replace="admin/_fragments::menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary menu stackable">
+            <h2 class="ui header teal item">管理后台</h2>
+            <a href="#" class="active m-item item m-mobile-hide"><i class=" home icon"></i>博客</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class=" idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class=" tags icon"></i>标签</a>
+            <div class="right menu m-item m-mobile-hide">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/seed/picsum/100/100?image=1805">
+                        蓝小狼
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--二级导航-->
+<div class="ui attached pointing menu">
+    <div class="ui  container">
+        <div class="right menu">
+            <a href="/admin/types/input" th:href="@{/admin/types/input}" class="active teal item">新增</a>
+            <a href="/admin/types" th:href="@{/admin/types}" class=" item">列表</a>
+        </div>
+    </div>
+</div>
+<!--中间部分-->
+<div class="m-padded-tb-big m-container-small">
+    <div class="ui container">
+        <form action="/admin/types" th:object="${type}" th:action="*{id} == null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})}" method="post" class="ui form">
+            <input type="hidden" name="id" th:value="*{id}">
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">名称</label>
+                    <input type="text" name="name" placeholder="name" th:value="*{name}">
+                </div>
+            </div>
+
+<!--            默认会找到这里将错误信息进行暂时-->
+            <div class="ui error message"></div>
+
+<!--            &lt;!&ndash;/*/-->
+            <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">验证失败</div>
+                <p th:errors="*{name}">提交的验证信息不合规则</p>
+            </div>
+<!--            /*/&ndash;&gt;-->
+<!--            发布保存返回按钮-->
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui submit teal button">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<th:block th:replace="admin/_fragments::script"></th:block>
+<script>
+    $('.menu.toggle').click(function (e) {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on:'hover'
+    });
+
+    $('.ui.form').form({
+        fields:{
+            name:{
+                identifier:'name',
+                rules:[{
+                    type:'empty',
+                    prompt:"请输入分类名称"
+                }]
+            },
+        }
+    });
+
+</script>
+</body>
+</html>
